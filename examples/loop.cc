@@ -1,7 +1,7 @@
 #include <iostream>
 #include <unistd.h>
 #include <math.h>
-#include "src/ina219.h"
+#include "ina219.h"
 
 
 int main(int argc, char *argv[])

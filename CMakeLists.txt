@@ -1,25 +1,23 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 2.6)
+project(INA219)
 
-# Project name
-project(ina219)
+# Set build type and compiler flags
+set(CMAKE_BUILD_TYPE Release)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=c++11")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall")
 
-# Set the C++ standard
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_STANDARD_REQUIRED True)
+# Set output directories
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
 
-# Output directories
-set(BUILD_DIR ${CMAKE_BINARY_DIR}/build)
-set(LIBRARY_OUTPUT_PATH ${BUILD_DIR})
-set(EXECUTABLE_OUTPUT_PATH ${BUILD_DIR})
+# Include directories
+include_directories(${PROJECT_SOURCE_DIR}/lib)
 
-# Create the build directory
-file(MAKE_DIRECTORY ${BUILD_DIR})
+# Add the library target
+add_library(INA219 STATIC lib/ina219.cc)
 
-# Add the shared library target
-add_library(ina219 SHARED src/ina219.cc)
+add_executable(profiler examples/profiler.cc)
+target_link_libraries(profiler INA219)
 
-# Add the executable target
-add_executable(profiler src/ina219.cc profiler.cc)
-
-# Specify the output directory for the executable
-set_target_properties(profiler PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${BUILD_DIR})
+add_executable(loop examples/loop.cc)
+target_link_libraries(loop INA219)
