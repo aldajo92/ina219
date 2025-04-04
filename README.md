@@ -20,6 +20,9 @@ Build:
 ```shell
 git clone https://github.com/regisin/ina219.git
 cd ina219
+mkdir build
+cd build
+cmake ..
 make
 ```
 
